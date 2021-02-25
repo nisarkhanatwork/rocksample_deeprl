@@ -5,7 +5,7 @@ I thought of getting some understanding about DeepRL by working on a sample prog
 
 ![MCTS](docs/rocksample_mcts.gif)
 
-To train it as ![karpathy trained openai gym "Atari pong"](https://gist.github.com/karpathy/a4166c7fe253700972fcbc77e4ea32c5) using DeepRL and explained it in the ![article](https://karpathy.github.io/2016/05/31/rl/) and keep it simple, ![code by mtrazzi](https://github.com/mtrazzi/spinning-up-a-Pong-AI-with-deep-RL) from which uses keras is used.
+To train it as ![karpathy trained openai gym "Atari pong"](https://gist.github.com/karpathy/a4166c7fe253700972fcbc77e4ea32c5) using DeepRL and explained it in the ![article](https://karpathy.github.io/2016/05/31/rl/) and to keep it simple, ![code by mtrazzi](https://github.com/mtrazzi/spinning-up-a-Pong-AI-with-deep-RL) from which uses keras is used.
 
 One of the models performed like this(you can see it picks up 0s and also ignores 1s):
 
