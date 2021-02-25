@@ -26,7 +26,6 @@ def differ(cur_input, prev_input):
     if found5 is True:
         res[i5] = 7.
     else:
-        print("5.0 not found...error+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     if c_found5 == True & (ic == i5):
         res[i5] = 5.
     
