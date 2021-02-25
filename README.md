@@ -22,7 +22,7 @@ The features given to the model are verified thoroughly. I consider the input da
 
 I am thinking for now, not to poke around with kernel and bias initializers.
 
-Some of the parameters that need to be tuned can be set in proc/model.py file:
+Some of the parameters that need to be tuned can be set in ![proc/model.py](proc/model.py) file:
 
 ```
         krnl_init = keras.initializers.RandomNormal(mean = 0.0, 
