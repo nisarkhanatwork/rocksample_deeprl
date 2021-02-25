@@ -1,4 +1,7 @@
 # rocksample_deeprl
+the following article has some info:
+https://www.linkedin.com/pulse/just-another-deeprl-rock-sampler-gym-ready-tuning-nisar-khan/
+
 To train the model:
 python rock_train.py
 
