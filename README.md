@@ -1,17 +1,24 @@
-# rocksample_deeprl
+# Just another DeepRL Rock Sampler program ready for tuning
 Reinforcement Learning is nothing but an agent learning after getting a reward for its action in an environment in a loop. And the agent learns a particular function which maps observations to actions in this process. This function is learned using deep learning in Deep Reinforcement Learning(DeepRL).
 
-I thought of getting some understanding about DeepRL by working on a sample program and came across a gym [1] by Dixant Mittal which is about a rover picking up 1s and avoiding 0s. The actual program has a MCTS(Monte Carlo Tree Search) implementation and its output looks like this:
+I thought of getting some understanding about DeepRL by working on a sample program and came across a ![gym by Dixant Mittal](https://github.com/dixantmittal/mctsnet) which is about a rover picking up 1s and avoiding 0s. The actual program has a MCTS(Monte Carlo Tree Search) implementation and its output looks like this:
 
 ![MCTS](docs/rocksample_mcts.gif)
 
-To train it as karpathy trained openai gym "Atari pong" using DeepRL [2] and explained it in the article [3] and keep it simple, code by mtrazzi from [4] which uses keras is used.
+To train it as ![karpathy trained openai gym "Atari pong"](https://gist.github.com/karpathy/a4166c7fe253700972fcbc77e4ea32c5) using DeepRL and explained it in the ![article](https://karpathy.github.io/2016/05/31/rl/) and keep it simple, ![code by mtrazzi](https://github.com/mtrazzi/spinning-up-a-Pong-AI-with-deep-RL) from which uses keras is used.
 
 One of the models performed like this(you can see it picks up 0s and also ignores 1s):
 
 ![MCTS](docs/rocksample_model.gif)
 
-The features given to the model are verified thoroughly. I consider the input data as sparse. Work can be done by changing 1) preprocessing of inputs 2) preprocessing of discounted rewards 3) gamma of discounted rewards 4) number of units in layer1 and layer2 5) activation functions 6) learning rate 7) optimizers
+The features given to the model are verified thoroughly. I consider the input data as sparse. Work can be done by changing:
+1) preprocessing of inputs 
+2) preprocessing of discounted rewards 
+3) gamma of discounted rewards 
+4) number of units in layer1 and layer2 
+5) activation functions 
+6) learning rate 
+7) optimizers
 
 I am thinking for now, not to poke around with kernel and bias initializers.
 
@@ -49,26 +56,12 @@ Some of the parameters that need to be tuned can be set in proc/model.py file:
             lr=lrn_rt, beta_1=0.9, beta_2=0.999, 
             epsilon=1e-07, name = 'nadam')
 ```        
-The articles and documents that I found to be really helpful are sklearn docs [5], Sebastian Ruder's article on optimizing gradient descent [6] along with inspiring karpathy's article "pong from pixels" [3], and karpathy's neural net training recipe[7].
+The articles and documents that I found to be really helpful are ![sklearn docs for preprocessing](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing), ![Sebastian Ruder's article](https://ruder.io/optimizing-gradient-descent/) on optimizing gradient descent along with inspiring karpathy's article ![pong from pixels](https://karpathy.github.io/2016/05/31/rl/), and karpathy's ![neural net training recipe](http://karpathy.github.io/2019/04/25/recipe/).
 
 Still working on hyperparameter tuning so as to get a good model...
 
-References:
-
-1.https://github.com/dixantmittal/mctsnet
-
-2.https://gist.github.com/karpathy/a4166c7fe253700972fcbc77e4ea32c5
-
-3.https://karpathy.github.io/2016/05/31/rl/
-
-4.https://github.com/mtrazzi/spinning-up-a-Pong-AI-with-deep-RL
-
-5.https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing
-
-6.https://ruder.io/optimizing-gradient-descent/
-
-7.http://karpathy.github.io/2019/04/25/recipe/
-
+### Running the program
+The files to run are in the ![proc](proc) directory:
 
 To train the model:
 `python rock_train.py`
