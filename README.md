@@ -58,7 +58,7 @@ Some of the parameters that need to be tuned can be set in ![proc/model.py](proc
 ```        
 The articles and documents that I found to be really helpful are ![sklearn docs for preprocessing](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing), ![Sebastian Ruder's article](https://ruder.io/optimizing-gradient-descent/) on optimizing gradient descent along with inspiring karpathy's article ![pong from pixels](https://karpathy.github.io/2016/05/31/rl/), and karpathy's ![neural net training recipe](http://karpathy.github.io/2019/04/25/recipe/).
 
-Still working on hyperparameter tuning so as to get a good model...
+Still working on hyperparameter tuning so as to get a good model...(![Click on this for my notes on optimizing sgd](Choosing_Optimizers.md))
 
 ### Running the program
 The files to run are in the ![proc](proc) directory:
