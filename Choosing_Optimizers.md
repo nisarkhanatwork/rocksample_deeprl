@@ -2,7 +2,7 @@
 
 ### Introduction:
 
-1) Model is a function approximated by a neural network after training.
+1) A function is approximated by a model after training.
 2) To determine how good a fit is, loss function is used.
 3) When the model and loss function are combined we get an optimization problem.
 4) Objective function is a loss function in which the model is plugged in i.e., it is parameterized by model parameters.
