@@ -87,7 +87,7 @@ Note: if the learning rate is infinitesimally small, the algorithm cannot learn.
 
 1) Adaptive learning rate methods in some cases are outperformed by SGD with momentum.
 2) The solution of Adaptive learning rate methods has the following disadvantages: a) Diminishes the influence of large and informative gradients which leads to poor convergence. b) Results in short-term memory of the gradients which becomes an obstacle in other scenarios.
-3) Because of the above reasons, the following algorithms have poor generalization behaviour: Adadelta, RMSprop, Adam, AdaMax, and Nadam
+3) Because of the above reasons, the following algorithms have poor generalization behaviour: Adadelta, RMSprop, Adam, and Nadam
 4) AMSGrad results in a non-increasing step size, which results in good generalization behavior.
 
 ### Additional Strategies for optimizing SGD:
