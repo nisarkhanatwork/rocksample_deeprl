@@ -1,4 +1,5 @@
 ## Just another DeepRL Rock Sampler program ready for tuning
+### Please NOTE!! I found a ![similar solved problem](https://www.samyzaf.com/ML/tdf/tdf.html)
 Reinforcement Learning is nothing but an agent learning in a loop after getting a reward for its action in an environment. And the agent learns a particular function which maps observations(of the environment) to actions in this process. This function is learned using deep learning in Deep Reinforcement Learning(DeepRL).
 
 I thought of getting some understanding about DeepRL by working on a sample program and came across a ![gym by Dixant Mittal](https://github.com/dixantmittal/mctsnet) which is about a rover picking up 1s and avoiding 0s. The actual program has a MCTS(Monte Carlo Tree Search) implementation and its output looks like this:
