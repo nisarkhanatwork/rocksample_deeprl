@@ -13,7 +13,7 @@ To train it as ![karpathy trained openai gym "Atari pong"](https://gist.github.c
 
 One of the models performed like this(you can see it picks up 0s and also ignores 1s):
 
-![MCTS](docs/rocksample_model.gif)
+![MCTS](docs/rock_apr1.gif)
 
 The features given to the model are verified thoroughly. I consider the input data as sparse. Work can be done by changing:
 1) preprocessing of inputs 
