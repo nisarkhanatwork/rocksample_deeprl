@@ -7,9 +7,11 @@ sys.path.insert(0,'../gym')
 import numpy as np
 from support import *
 from model import *
+MAX_STEPS = 25 
 
 def run_exper(model, steps, get_features, pre_proc_features):
     r_tup, e_tup = [], []
+    rover_poss = []
     total_stats = {'total':0, 'good':0}
 
     from environment import SIMULATOR
@@ -21,6 +23,7 @@ def run_exper(model, steps, get_features, pre_proc_features):
     state_temp = my_sim.reset()
     observation = my_sim.state_to_tensor(state_temp)
     state_obs = observation
+    total_moves = 0
 
     # main loop
     prev_input = None
@@ -28,14 +31,28 @@ def run_exper(model, steps, get_features, pre_proc_features):
         # preprocess the observation, set input as difference between images
         cur_input = observation
 
-        x = differ(cur_input, prev_input) if prev_input is not None else np.zeros(70)
+        x = cur_input.astype(np.float).ravel() if prev_input is not None else np.zeros(70)
         x = x[10:80] if prev_input is not None else x
-        prev_input = cur_input
-        x = np.array(get_features(x))
+        x = np.array([x[i] for i in range(len(x)) if not (i%10 == 0)])
+        x = np.array([x[i] for i in range(len(x)) if not ((i - 8 )% 9 == 0)])
 
-        x_shape = x.shape
+
+        prev_input = cur_input
+
+        x, rover_pos = get_rover_pos(x, r_tup, e_tup, rover_poss)
+        rover_poss.append(rover_pos)
+        x = np.array(x)
+        """
+        x = x[x != 0]
+        if(len(x) == 1):
+            x = np.zeros(4)
+            x = x.tolist()
+            x.append(-7.)
+            x = np.array(x)
+        """
+
         x_t = pre_proc_features.fit_transform(x.reshape(-1, 1))
-        x_t = x_t.reshape(x_shape)
+        x_t = x_t.reshape(1, INPUT_SIZE)[0]
         # forward the policy network and sample action according to the proba distribution
         proba = model.predict(np.expand_dims(x_t, axis=1).T)
         action = proba.argmax() 
@@ -44,6 +61,10 @@ def run_exper(model, steps, get_features, pre_proc_features):
         state_temp, reward, done, r_tup, e_tup = my_sim.step(action)
         observation = my_sim.state_to_tensor(state_temp)
         #my_sim.render()
+        total_moves += 1
+        if(total_moves == MAX_STEPS):
+            done = True
+            total_moves = 0
 
         # if episode is over, reset to beginning
         if done:
@@ -55,11 +76,11 @@ def run_exper(model, steps, get_features, pre_proc_features):
             #print("obs ===============")
             #print(observation)
             try:
-                index_obs = so.index(3.0)
+                index_obs = so.index(7.0)
             except ValueError:
                 index_obs = -1
             try:
-                index_curr = o.index(3.0)
+                index_curr = o.index(7.0)
             except ValueError:
                 index_curr = -1
 
@@ -71,6 +92,7 @@ def run_exper(model, steps, get_features, pre_proc_features):
             state_temp = my_sim.reset()
             observation = my_sim.state_to_tensor(state_temp)
             state_obs = observation
+            rover_poss = []
             #my_sim.render()    
 
     return total_stats

@@ -20,21 +20,38 @@ def run_exper(model, steps, get_features, pre_proc_features):
     # beginning of an episode
     state_temp = my_sim.reset()
     observation = my_sim.state_to_tensor(state_temp)
-
+    r_tup, e_tup, rover_poss = [], [], []
     # main loop
     prev_input = None
+    total_moves = 0
+    MAX_MOVES = 25
     for i in range(steps):
+        total_moves += 1
+        start = time.perf_counter()
         cur_input = observation
-        x = differ(cur_input, prev_input) if prev_input is not None else np.zeros(70)
+        x = cur_input.astype(np.float).ravel() if prev_input is not None else np.zeros(70)
         x = x[10:80] if prev_input is not None else x
+        x = np.array([x[i] for i in range(len(x)) if not (i%10 == 0)])
+        x = np.array([x[i] for i in range(len(x)) if not ((i - 8 )% 9 == 0)])
+
+        x , rov_pos = get_rover_pos(x, r_tup, e_tup, rover_poss)
+        x = np.array(x)
+        rover_poss.append(rov_pos)
+        """
+        x = x[x != 0]
+        if(len(x) == 1):
+            x = np.zeros(4)
+            x = x.tolist()
+            x.append(-7.)
+            x = np.array(x)
+        """
+        #print_map(x)
+        x_t = pre_proc_features.fit_transform(x.reshape(-1, 1))
+        x_t = x_t.reshape(1, INPUT_SIZE)[0]
+        print("Shape = ", x_t.shape)
         prev_input = cur_input
-        x = np.array(get_features(x))
 
         # forward the policy network and sample action according to the proba distribution
-        start = time.perf_counter()
-        x_shape = x.shape
-        x_t = pre_proc_features.fit_transform(x.reshape(-1, 1))
-        x_t = x_t.reshape(x_shape)
         #print_map(x)
         proba = model.predict(np.expand_dims(x_t, axis=1).T)
         end = time.perf_counter()
@@ -42,16 +59,20 @@ def run_exper(model, steps, get_features, pre_proc_features):
         print("Time taken = ", end - start)
 
         #run one step
-        state_temp, reward, done, _, _ = my_sim.step(action)
+        state_temp, reward, done, r_tup, e_tup = my_sim.step(action)
         observation = my_sim.state_to_tensor(state_temp)
         my_sim.render()
         time.sleep(1)
 
+        if total_moves == MAX_MOVES:
+            total_moves = 0
+            done = True
         # if episode is over, reset to beginning
         if done:
             state_temp = my_sim.reset()
             observation = my_sim.state_to_tensor(state_temp)
             my_sim.render()    
+            rover_poss = []
 
 
 if __name__ == '__main__':

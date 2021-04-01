@@ -51,7 +51,7 @@ def print_map(x):
     for i in x:
         print("{0:>7}".format(float(i)),end=' ')
         count += 1
-        if(count % 10 == 0):
+        if(count % 7 == 0):
             print()
 
 def print_map_orig(x):
@@ -86,6 +86,48 @@ def get_pos(x):
             25. if x[25] == 3. else -25., 
             35. if x[35] == 3. else -35., 
             45. if x[45] == 3. else -45.]
+
+def get_rover_pos(x, r_tup, e_tup, rover_poss):
+   
+    y = np.array(x.tolist()).reshape(7, 8)
+
+    y = y.T
+    x = y.ravel().tolist()
+    r_on, e_on, v_on = False, False, False
+    pos = -1
+    try:
+        pos = x.index(5.) 
+        pos_x = int(pos % 7)
+        pos_y = int(pos / 7)
+    except:
+        pos_x = -1
+        pos_y = -1
+    
+    # visited
+    for p in rover_poss:
+        x[p[0] * 7 + p[1]] = 1.
+
+    for p in rover_poss:
+        if(p in r_tup or p in e_tup):
+            x[p[0] * 7 + p[1]] = -7.
+
+    """
+    if ((pos_y, pos_x) in r_tup):
+        r_on = True
+    elif ((pos_y, pos_x) in e_tup):
+        #print("Found POS ============================================================================", (pos_y, pos_x)) 
+        e_on = True
+    elif((pos_y, pos_x) in rover_poss):
+        v_on = True
+    if(r_on or e_on or v_on):
+        x[pos] = 5.
+    else:
+        x[pos] = 0.
+    """
+    x[pos] = 5.0
+    #x.append(pos_y)
+    #x.append(pos_x)
+    return x, (pos_y, pos_x)
 
 # dummy to return the same 
 def get_same(x):

@@ -28,15 +28,16 @@ class RockSample(BaseSimulator):
 
     ACTIONS = ['UP', 'DOWN', 'LEFT', 'RIGHT']
 
-    ILLEGAL_ACTION_REWARD = -10 
+    ILLEGAL_ACTION_REWARD = -10
     BAD_ROCK_REWARD = -10
-    GOOD_ROCK_REWARD = 10
+    GOOD_ROCK_REWARD = 1
     EXIT_REWARD = 1
-    MOVE_REWARD = 0
+    MOVE_REWARD = -1
 
     def __init__(self):
         super().__init__()
         self.quality = [] 
+        np.random.seed(121)
 
     def reset(self):
         # fixed position
@@ -140,7 +141,7 @@ class RockSample(BaseSimulator):
         for rock, quality in zip(rocks, qualities):
             tensor[1, rock.y, rock.x] = 1
             tensor[2, rock.y, rock.x] = (1 if quality == 1 else -1)
-            tensor[0, rock.y, rock.x] = 1. if quality == 0 else 3.
+            tensor[0, rock.y, rock.x] = -7. if quality == 0 else 7.
             old_rock += 1
         tensor[0, rover.y, rover.x] = 5. 
 
