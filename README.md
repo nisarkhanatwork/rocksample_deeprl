@@ -75,3 +75,6 @@ To see how the latest model is working:
 
 To test the models(Still in development):
 `python rock_model_test.py`
+
+To run the model given in ![models](models) directory:
+`python rock_model_demo_latest.py --demo_file rock_my_model_weights20210401-174456.h5 --n_steps 200`
